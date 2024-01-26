@@ -1,0 +1,7 @@
+/* 
+
+Functions
+
+Learned on reborgs world
+
+*/
