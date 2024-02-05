@@ -29,6 +29,9 @@ def get_computer_card():
 
     while computer <= 21:
         x = cards[random.randint(0,12)]
+        if x == 11:
+            if computer + x > 21:
+                x = 1
         computer += x
         computer_cards.append(x)
     
@@ -41,9 +44,13 @@ def get_computer_card():
 
 def get_human_cards():
     human_cards = []
+    human = 0
     
     for i in range(0,2):
         x = cards[random.randint(0,12)]
+        if x == 11:
+            if human + x > 21:
+                x = 1
         human_cards.append(x)
     return human_cards
 
@@ -54,6 +61,7 @@ def blackjack():
     computer_sum = sum(computer_cards)
 
     human_cards = get_human_cards()
+    human = sum(human_cards)
 
     print(art.logo)
     print(f"Your cards: {human_cards}")
@@ -65,7 +73,12 @@ def blackjack():
         another_hit = input("Type 'y' to get another card, type 'n' to pass: ")
 
         if another_hit == 'y':
-            human_cards.append(cards[random.randint(0,12)])
+            z = cards[random.randint(0,12)]
+            if z == 11:
+                if human + z > 21:
+                    z = 1
+            
+            human_cards.append(z)
             print(f'Your cards {human_cards} and the total is {sum(human_cards)}')
             if sum(human_cards) > 21:
                 print(f"Your final hand: {human_cards}")
