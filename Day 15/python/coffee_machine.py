@@ -29,6 +29,7 @@ resources = {
     "water": 300,
     "milk": 200,
     "coffee": 100,
+    "money": 0
 }
 
 #print(MENU["espresso"]["ingredients"])
@@ -49,7 +50,8 @@ def coin_counter(drink,quaters, dimes, nickles, pennies):
 
     if drink_price > change:
         return "Sorry that's not enough money. Money refunded."
-
+    
+    resources["money"] += drink_price
     return f"Here is ${change} in change."
 
 
@@ -85,32 +87,52 @@ def resource_check(drink):
 
     return resources
 
-print(resources)
-print(resource_check("espresso"))
-print(resource_check("latte"))
-print(resource_check("espresso"))
-print(resource_check("espresso"))
-print(resource_check("espresso"))
-print(resource_check("espresso"))
-
-
-
-
-
-
+# print(resources)
+# print(resource_check("espresso"))
+# print(resource_check("latte"))
+# print(resource_check("espresso"))
+# print(resource_check("espresso"))
+# print(resource_check("espresso"))
+# print(resource_check("espresso"))
 
 def making_coffee():
-    drink = input(" What would you like? (espresso/latte/cappuccino): ")
-    print("Please insert coins.")
-    quarters = int(input("how many quarters?: "))
-    dimes = int(input("how many dimes?: "))
-    nickles = int(input("how many nickles?: "))
-    pennies = int(input("how many pennies?: "))
+
+    
+    order_wanted = True
+
+    while order_wanted:
+
+        drink = input(" What would you like? (espresso/latte/cappuccino): ")
+        if drink == 'off':
+            order_wanted = False
+            return "Machine has been turned off."
+        elif drink == 'report':
+            water = resources["water"]
+            print(f"Water: {water}ml")
+            print(f"Milk: {resources['milk']}ml")
+            print(f"Coffee: {resources['coffee']}ml")
+            print(f"Money: ${resources['money']}")
+        else:
+
+            resources_available = resource_check(drink=drink)
+
+            if resources_available == "Sorry there is not enough water.":
+                print(resources_available)
+            elif resources_available == "Sorry there is not enough milk.":
+                print(resources_available)
+            elif resources_available == "Sorry there is not enough coffee.":
+                print(resources_available)
+            else:
+
+                print("Please insert coins.")
+                quarters = int(input("how many quarters?: "))
+                dimes = int(input("how many dimes?: "))
+                nickles = int(input("how many nickles?: "))
+                pennies = int(input("how many pennies?: "))
+
+                coins_return = coin_counter(drink=drink,quaters=quarters,dimes=dimes,nickles=nickles,pennies=pennies)
+                print(coins_return)
+                print("Here is your latte ☕. Enjoy!")
 
 
-    print(coin_counter(drink=drink,quaters=quarters,dimes=dimes,nickles=nickles,pennies=pennies))
-
-    print(resources)
-
-
-
+print(making_coffee())
